@@ -162,7 +162,7 @@ class MineCraft {
       for (let j = 0; j < shape.board[0].length; j++) {
         if (shape.board[i][j]) {
           this.matrix[this.groundIndex - (shape.board.length - 1 - i)][
-            indexToAdd + j + 3
+            indexToAdd + j + 1
           ].classList.add(shape.board[i][j]);
         }
       }
