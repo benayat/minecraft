@@ -108,13 +108,13 @@ landing page!!
 building materials:
 */
 .square_pickaxe{
-  background-image: url(./img/pickaxe.jpg) no-repeat center center/cover;;
+  background: url(./img/pickaxe.jpg) no-repeat center center/cover;;
 }
 .square_shovel{
-  background-image: url(./img/shovel.jpg) no-repeat center center/cover;;
+  background: url(./img/shovel.jpg) no-repeat center center/cover;;
 }
 .square_axe{
-  background-image: url(./img/shovel.jpg) no-repeat center center/cover;;
+  background: url(./img/shovel.jpg) no-repeat center center/cover;;
 }
 
 .right_div{
