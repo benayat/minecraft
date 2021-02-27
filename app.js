@@ -558,7 +558,10 @@ function validateLocationInsert(square, classToInsert) {
 //this is an event litener for the available squares, I'll add once to the listener.
 function addFromMemory(event) {
   const classToAdd = this.memory ? this.memory.pop() : null;
-  if (validateLocationInsert.call(this, event.target, classToAdd)) {
+  if (
+    classToAdd &&
+    validateLocationInsert.call(this, event.target, classToAdd)
+  ) {
     event.target.classList.add(classToAdd);
     const addToInventoryBind = addToInventory.bind(this);
     event.target.addEventListener("click", addToInventoryBind, {
