@@ -226,8 +226,10 @@ placing: buttons in a flex dix, column direction, and the resources histogram in
     let axeButton = rightDiv.querySelector(".axe").firstElementChild;
 
     let radioHandlerBind = radioHandler.bind(this);
+
     //making radioHandler active in purpose - so it will set the active one page load.
-    shovelButton.addEventListener("change", radioHandlerBind());
+    radioHandlerBind();
+    shovelButton.addEventListener("change", radioHandlerBind);
     pickaxeButton.addEventListener("change", radioHandlerBind);
     axeButton.addEventListener("change", radioHandlerBind);
 
