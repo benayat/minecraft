@@ -111,7 +111,8 @@ class Shape {
 
 class MineCraft {
   constructor() {
-    const triplet = MineCraft.createBaseScreen("pc");
+    let screen = window.innerWidth <= 568 ? "smartphone" : "pc";
+    const triplet = MineCraft.createBaseScreen(screen);
     this.world = triplet.world;
     this.matrix = triplet.matrix;
     this.rowArray = triplet.rowArray;
@@ -411,22 +412,24 @@ rocks: up to three, two shapes.(1 and 2 close)
     let world;
     let matrix;
     let rowArray;
+    let matrixTriple;
     switch (screenType) {
       case "pc": {
-        let matrixTriple = MineCraft.worldSetUp("square", 25, 50);
-        world = matrixTriple.world;
-        matrix = matrixTriple.matrix;
-        rowArray = matrixTriple.rowArray;
-        MineCraft.baseSoil(matrix, rowArray);
-        MineCraft.basegrass(matrix, rowArray);
-        MineCraft.BaseSky(matrix, rowArray);
+        matrixTriple = MineCraft.worldSetUp("square", 25, 50);
         break;
       }
       case "smartphone": {
+        matrixTriple = MineCraft.worldSetUp("square", 20, 40);
       }
       default:
         break;
     }
+    world = matrixTriple.world;
+    matrix = matrixTriple.matrix;
+    rowArray = matrixTriple.rowArray;
+    MineCraft.baseSoil(matrix, rowArray);
+    MineCraft.basegrass(matrix, rowArray);
+    MineCraft.BaseSky(matrix, rowArray);
     return { world, matrix, rowArray };
   }
 
