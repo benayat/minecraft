@@ -83,7 +83,7 @@ landing page!!
 
 /* diferent kinds of square backgroungds for diferent materials */
 .square_dirt{
-  background-image: url(./img/dirt.jpg);
+  background-image: url(./img/dirt.jpg) no-repeat center center/cover;
 }
 .square_bellow_surface{
   background: url(./img/grass.png) no-repeat center center/cover;
