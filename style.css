@@ -90,16 +90,16 @@ landing page!!
   /* background-image: url(./img/grass.png); */
 }
 .square_plants{
-  background-image: url(./img/leaf.png) no-repeat center center/cover;;
+  background: url(./img/leaf.png) no-repeat center center/cover;;
 }
 .square_rock{
-  background-image: url(./img/rock.png) no-repeat center center/cover;;
+  background: url(./img/rock.png) no-repeat center center/cover;;
 }
 .square_log{
-  background-image: url(./img/trunk.png) no-repeat center center/cover;;
+  background: url(./img/trunk.png) no-repeat center center/cover;;
 }
 .square_cloud{
-  background-image: url(./img/cloud.png) no-repeat center center/cover;;
+  background: url(./img/cloud.png) no-repeat center center/cover;;
 }
 .square_sky{
   background-color: skyblue;
@@ -191,7 +191,7 @@ building materials:
 }
 /* this is for the inventory divs: */
 #square_dirt{
-  background: url(img/higher_res_img/soil.jpg) no-repeat center center/cover;;
+  background: url(./img/higher_res_img/soil.jpg) no-repeat center center/cover;;
 }
 
 #square_bellow_surface{
