@@ -18,7 +18,6 @@ column-flexed items:
 (inventory: ), 
 }
  
-
 button: shake the world/restart: 
 - animation - page shaking.
 - randomizing everything.
@@ -262,6 +261,20 @@ placing: buttons in a flex dix, column direction, and the resources histogram in
     inventory_squares.forEach((x) =>
       x.addEventListener("click", moveToMemoryBind)
     );
+
+    let buttonsHTML = `
+    <button class = "game_control reset">RESET GAME</button>
+    <button class = "game_control backToMenu">BACK</button>
+    `;
+    rightDiv.insertAdjacentHTML("afterbegin", buttonsHTML);
+    const buttonReset = rightDiv.querySelector(".reset");
+    const buttonExit = rightDiv.querySelector(".exit");
+
+    const resetGameBind = resetGame.bind(this);
+    const exitGameBind = exitGame.bind(this);
+
+    buttonReset.addEventListener("click", resetGameBind);
+    buttonExit.addEventListener("click", exitGameBind);
 
     // target: add event listeners to all squares that can and need to move.
     //the event will be a click one.
@@ -650,3 +663,15 @@ to fix that i"l have to use promises, maybe I"ll take care of that next week.
 
 
 */
+
+function resetGame(event) {
+  setTimeout(reload, 1500);
+}
+function reload() {
+  location.reload();
+}
+function exitGame() {
+  if (window.confirm("ARE YOU SURE? all progress will be lost!")) {
+    window.close();
+  }
+}
