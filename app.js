@@ -531,16 +531,20 @@ function validateLocationRemove(square) {
     return false;
   }
 }
+
 function validateLocationInsert(square, classToInsert) {
   let lastClass = getLastClass(square);
   const getSonSquareBind = getSonSquare.bind(this);
   let lastClassSon = getLastClass(getSonSquareBind(square));
+  let lastClassRight = getLastClass(square.nextElementSibling);
+  let lastClassLeft = getLastClass(square.previousElementSibling);
   if (
-    (classToInsert == "square_cloud" && lastClass == "square_sky") ||
-    (classToInsert != "square_cloud" &&
-      classToInsert &&
-      lastClassSon != "square_cloud" &&
-      lastClassSon != "square_sky")
+    lastClass == "square_sky" &&
+    ((classToInsert == "square_plants" &&
+      (lastClassRight == "square_plants" ||
+        lastClassLeft == "square_plants")) ||
+      classToInsert == "square_cloud" ||
+      (classToInsert != "square_cloud" && lastClassSon != "square_sky"))
   ) {
     return true;
   } else {
@@ -631,8 +635,12 @@ function radioHandler(event) {
 /* 
 * things left to do: 
 - insert a tree plant - let it be also if sibling square has another plant - so I'll be able to rebuild the tree.
+- on a second thought - I'll just show a memory queue somewhere?I"l think about it.
 
 - instead of memory crap, just remove memory and make all the inventory stuf radio buttons - so no need for invisible queue like I have for memory, plus the user will be able to do this better. 
+
+- after a while in the game, it shows alot of error messages: "the message port was closed before a response was reveived". 
+to fix that i"l have to use promises, maybe I"ll take care of that next week.
 
 
 */
