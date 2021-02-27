@@ -1,0 +1,212 @@
+:root{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+  overflow-y: hidden;
+
+}
+
+.world{
+  position: absolute;
+  top:0;
+  left:0;
+  display: flex;
+  flex-direction: column;
+
+}
+
+/* 
+landing page!!
+*/
+.startDiv{
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+
+}
+
+.landing_logo{
+  object-fit: contain;
+  content: url(./img/logo2.jpg); 
+  height: 30vh;
+  width: 30vw;
+
+}
+.start{
+  background: white;
+  font-size: 1rem;
+  width:max-content;
+}
+/* rows: */
+.row{
+  display: flex;
+  flex-direction: row;
+}
+
+/* general square-style. */
+.square{
+  display: inline-block;
+  height: 4vh;
+  width: 4vh;
+  background: no-repeat;
+  background-size: cover;
+  overflow: hidden; /* this line added */
+
+}
+.square:hover{
+  outline: 2px solid grey;
+}
+.square_ipad{
+  height: 5vh;
+  width: 5vh;
+}
+
+.square_small{
+  height: 3vh;
+  width: 3vh;
+  border: 1px solid white;
+}
+
+/* different square classes for different size: */
+.landing_Page_square{
+  display: inline-block;
+  height : 22vh;
+  width : 22vh;
+  background: no-repeat;
+  background-size: cover;
+}
+
+/* diferent kinds of square backgroungds for diferent materials */
+.square_dirt{
+  background-image: url(./img/dirt.jpg) no-repeat center center/cover;
+}
+.square_bellow_surface{
+  background: url(./img/grass.png) no-repeat center center/cover;
+  /* background-image: url(./img/grass.png); */
+}
+.square_plants{
+  background-image: url(./img/leaf.png);
+}
+.square_rock{
+  background-image: url(./img/rock.png);
+}
+.square_log{
+  background-image: url(./img/trunk.png);
+}
+.square_cloud{
+  background-image: url(./img/cloud.png);
+}
+.square_sky{
+  background-color: skyblue;
+}
+/* 
+building materials:
+*/
+.square_pickaxe{
+  background-image: url(./img/pickaxe.jpg);
+}
+.square_shovel{
+  background-image: url(./img/shovel.jpg);
+}
+.square_axe{
+  background-image: url(./img/shovel.jpg);
+}
+
+.right_div{
+  background: black;
+  height: 100vh;
+  /* does it work?? */
+  width: 21.5vh;
+  position: absolute;
+  top:0;
+  right:0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 2vh;
+}
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+  border : solid white 1px;
+  height: 12vh;
+  width: 12vh;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  background-color: blue;
+}
+#shovel_img{
+  background: url(./img/shovel.jpg) no-repeat cover;
+}
+#pickaxe_img{
+  background: url(./img/pickaxe.jpg) no-repeat cover;
+}
+#axe_img{
+  background: url(./img/axe.jpg) no-repeat cover;
+}
+
+.inventory_wrap{
+  display: block;
+
+  padding-top: 10vh;
+}
+.inventory{
+  position: relative;
+  left: 0.5vh;
+  display: inline-block;
+  height: 10vh;
+  width: 10vh;
+
+}
+.inventory:hover{
+  outline: 1px solid green;
+}
+.invisible{
+  display: none;
+}
+.small_number{
+  position: absolute;
+  top:0;
+  right:0;
+
+  font-size: 3vh;
+  text-align: right;
+}
+/* this is for the inventory divs: */
+#square_dirt{
+  background-image: url(./img/dirt.jpg);
+}
+
+#square_bellow_surface{
+  background: url(./img/grass.png) no-repeat center center/cover;
+  /* background-image: url(./img/grass.png); */
+}
+#square_plants{
+  background-image: url(./img/leaf.png);
+}
+#square_rock{
+  background-image: url(./img/rock.png);
+}
+#square_log{
+  background-image: url(./img/trunk.png);
+}
+#square_cloud{
+  background-image: url(./img/cloud.png);
+}
