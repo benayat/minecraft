@@ -133,12 +133,11 @@ class MineCraft {
 
     this.groundPlacement();
     this.cloudPlacement();
-    debugger;
+    this.classes_allowed = [];
     this.makeRightDiv();
     this.inventory = {};
-    this.classes_allowed = [];
-    //I know it's not recommended, but that's still the best choise here...
-    this.memory = undefined;
+    this.memory = [];
+    //removed memory. going for radio buttons instead.
   }
 
   /* 
@@ -184,6 +183,31 @@ placing: buttons in a flex dix, column direction, and the resources histogram in
     rightDiv.insertAdjacentHTML("beforeend", pickaxeButtonHTML);
     rightDiv.insertAdjacentHTML("beforeend", axeButtonHTML);
     //make inventoryHTML with html.
+    /*     let inventoryDirtButtonHTML = `<label class = "inventory invisible" id = "square_dirt">
+    <input type="radio" name="resource">
+    <img id = "dirt_img" src="img/dirt.jpg">
+    </label>`;
+    let inventoryGrassButtonHTML = `<label class = "inventory invisible" id = "square_bellow_surface">
+    <input type="radio" name="resource">
+    <img id = "grass_img" src="img/grass.png">
+    </label>`;
+    let inventoryLogButtonHTML = `<label class = "inventory invisible" id = "square_log">
+    <input type="radio" name="resource">
+    <img id = "log_img" src="img/trunk.jpg">
+    </label>`;
+    let inventoryPlantButtonHTML = `<label class = "inventory invisible" id = "square_plants">
+    <input type="radio" name="resource">
+    <img id = "leaf_img" src="img/leaf.png">
+    </label>`;
+    let inventoryRockButtonHTML = `<label class = "inventory invisible" id = "square_rock">
+    <input type="radio" name="resource">
+    <img id = "dirt_img" src="img/dirt.jpg">
+    </label>`;
+    let inventoryCloudButtonHTML = `<label class = "inventory invisible" id = "square_cloud">
+    <input type="radio" name="resource">
+    <img id = "dirt_img" src="img/dirt.jpg">
+    </label>`;
+ */
     const inventoryHTML = `
     <div class = "inventory_wrap">
     <div class = "inventory invisible" id = "square_dirt"><span class = small_number></span></div>
@@ -196,40 +220,45 @@ placing: buttons in a flex dix, column direction, and the resources histogram in
     `;
     rightDiv.insertAdjacentHTML("beforeend", inventoryHTML);
     //in the meantime - adding classes style in css for the radio buttons. simple and done.
+    debugger;
+    let shovelButton = rightDiv.querySelector(".shovel").firstElementChild;
+    let pickaxeButton = rightDiv.querySelector(".pickaxe").firstElementChild;
+    let axeButton = rightDiv.querySelector(".axe").firstElementChild;
 
-    let shovelButton = rightDiv.querySelector(".shovel").firstChild;
-    let pickaxeButton = rightDiv.querySelector(".pickaxe").firstChild;
-    let axeButton = rightDiv.querySelector(".axe").firstChild;
-
-    shovelButton.addEventListener("change", () => radioHandler.bind(this));
-    pickaxeButton.addEventListener("change", () => radioHandler.bind(this));
-    axeButton.addEventListener("change", () => radioHandler.bind(this));
+    let radioHandlerBind = radioHandler.bind(this);
+    //making radioHandler active in purpose - so it will set the active one page load.
+    shovelButton.addEventListener("change", radioHandlerBind());
+    pickaxeButton.addEventListener("change", radioHandlerBind);
+    axeButton.addEventListener("change", radioHandlerBind);
 
     /*
      * I used bind for the event listeners, because otherwise I wouldn't be able to reference to the mineCraft object in any way - not by the global object because the constructor hasn't finished yet, and not by the "this" keyword because it will point to the window if we go deeper in the scope.
      */
 
     let squareResources = this.world.querySelectorAll(
-      ".square_bellow_surface,.square_cloud,.square_plants,.square_log,.square_rock"
+      ".square_dirt,.square_bellow_surface,.square_cloud,.square_plants,.square_log,.square_rock"
     );
+    let addToInventoryBind = addToInventory.bind(this);
     squareResources.forEach((x) =>
-      x.addEventListener("click", () => addToInventory.bind(this), {
+      x.addEventListener("click", addToInventoryBind, {
         once: true,
       })
     );
-    debugger;
     //* important thing I learned: querySelecyorAll uses css selector, and so you can use [attribute^=value]	or [attribute$=value] for atributes which the value ends with the specified value.
     let squaresAvailable = this.world.querySelectorAll(
       'div[class$="square square_sky"]'
     );
+    let addfromMemoryBind = addFromMemory.bind(this);
     squaresAvailable.forEach((x) =>
-      x.addEventListener("click", () => addFromMemory.bind(this), {
+      x.addEventListener("click", addfromMemoryBind, {
         once: true,
       })
     );
+    let moveToMemoryBind = moveToMemory.bind(this);
+
     let inventory_squares = rightDiv.querySelectorAll(".inventory");
     inventory_squares.forEach((x) =>
-      x.addEventListener("click", () => moveToMemory.bind(this))
+      x.addEventListener("click", moveToMemoryBind)
     );
 
     // target: add event listeners to all squares that can and need to move.
@@ -370,7 +399,6 @@ rocks: up to three, two shapes.(1 and 2 close)
     for (let i = 0; i <= index; i++) {
       matrix[i].forEach((value) => value.classList.add("square_sky"));
     }
-    matrix[index].forEach((x) => x.classList.add("ground_square"));
   }
   static clearWorld({ world, matrix, rowArray }) {
     world.innerHTML = "";
@@ -467,28 +495,36 @@ set up event listeners:
 // get a string of last element class.
 function getLastClass(element) {
   const array = element.className.split(" "),
-    [last] = data.slice(-1);
+    [last] = array.slice(-1);
   return last;
 }
 
 function getIndex(square) {
   let yIndex = this.rowArray.indexOf(square.parentElement);
-  let xIndex = this.board[yIndex].indexOf(square);
+  let xIndex = this.matrix[yIndex].indexOf(square);
   return [xIndex, yIndex];
 }
 function getFatherSquare(square) {
-  return this.board[getIndex(square)[0]][getIndex(square)[1] + 1];
+  let getIndexBind = getIndex.bind(this);
+
+  return this.matrix[getIndexBind(square)[1] - 1][getIndexBind(square)[0]];
 }
 function getSonSquare(square) {
-  return this.board[getIndex(square)[0]][getIndex(square)[1] - 1];
+  let getIndexBind = getIndex.bind(this);
+  return this.matrix[getIndexBind(square)[1] + 1][getIndexBind(square)[0]];
 }
+
+//*take into account: if it's not inside allowed_classes property, dont allow it!
 function validateLocationRemove(square) {
   let lastClass = getLastClass(square);
-  let lastClassFather = getLastClass(getFatherSquare(square));
+  const getFatherSquareBind = getFatherSquare.bind(this);
+  let lastClassFather = getLastClass(getFatherSquareBind(square));
+
   if (
-    lastClass == "square_cloud" ||
-    lastClassFather == "square_sky" ||
-    lastClassFather == "square_sky"
+    this.classes_allowed.includes(lastClass) &&
+    (lastClass == "square_cloud" ||
+      lastClassFather == "square_sky" ||
+      lastClassFather == "square_sky")
   ) {
     return true;
   } else {
@@ -497,10 +533,12 @@ function validateLocationRemove(square) {
 }
 function validateLocationInsert(square, classToInsert) {
   let lastClass = getLastClass(square);
-  let lastClassSon = getLastClass(getSonSquare(square));
+  const getSonSquareBind = getSonSquare.bind(this);
+  let lastClassSon = getLastClass(getSonSquareBind(square));
   if (
     (classToInsert == "square_cloud" && lastClass == "square_sky") ||
     (classToInsert != "square_cloud" &&
+      classToInsert &&
       lastClassSon != "square_cloud" &&
       lastClassSon != "square_sky")
   ) {
@@ -514,10 +552,17 @@ function validateLocationInsert(square, classToInsert) {
 //*right now, I need to add a memory  in the game for one square!
 //this is an event litener for the available squares, I'll add once to the listener.
 function addFromMemory(event) {
-  const classToAdd = this.memory.pop();
-  if (validateLocationInsert(event.target, classToAdd)) {
+  debugger;
+  const classToAdd = this.memory ? this.memory.pop() : null;
+  if (validateLocationInsert.call(this, event.target, classToAdd)) {
     event.target.classList.add(classToAdd);
-    event.target.addEventListener("click", () => addToInventory.bind(this), {
+    const addToInventoryBind = addToInventory.bind(this);
+    event.target.addEventListener("click", addToInventoryBind, {
+      once: true,
+    });
+  } else {
+    const addFromMemoryBind = addFromMemory.bind(this);
+    event.target.addEventListener("click", addFromMemoryBind, {
       once: true,
     });
   }
@@ -525,6 +570,7 @@ function addFromMemory(event) {
 //*still not ready - need to set up the inventory on the screen.
 function moveToMemory(event) {
   //do something.
+  debugger;
   this.memory.unshift(event.target.id);
   this.inventory[event.target.id]--;
   event.target.firstElementChild.innerHTML = this.inventory[event.target.id];
@@ -536,33 +582,57 @@ function moveToMemory(event) {
 //adding a square to inventory, while removing the last one from the board.
 function addToInventory(event) {
   debugger;
-  let lastClass = getLastClass(event.target);
-  if (validateLocationRemove(event.target)) {
+  const lastClass = getLastClass(event.target);
+  if (validateLocationRemove.call(this, event.target)) {
     this.inventory[lastClass] = (this.inventory[lastClass] || 0) + 1;
     event.target.classList.remove(lastClass);
-    event.target.addEventListener("click", () => addFromMemory.bind(this), {
+    const addFromMemoryBind = addFromMemory.bind(this);
+    event.target.addEventListener("click", addFromMemoryBind, {
       once: true,
     });
-    document.querySelector(
-      `#${lastClass}`
-    ).firstElementChild.innerHTML = this.inventory[lastClass];
+    const currentInventoryItem = document.querySelector(`#${lastClass}`);
+    currentInventoryItem.firstElementChild.innerHTML = this.inventory[
+      lastClass
+    ];
+
+    //nothing happens if invisible doesn't exist there!
+    currentInventoryItem.classList.remove("invisible");
+  } else {
+    const addToInventoryBind = addToInventory.bind(this);
+    event.target.addEventListener("click", addToInventoryBind, {
+      once: true,
+    });
   }
 }
 //*plan: add this.classes_allowed to MineCraft.
 //*make sure it's applied in the square click listeners.
 function radioHandler(event) {
+  debugger;
   let currentButton;
-  for (let button of rightDiv.querySelectorAll('input[name = "tool"]')) {
+  for (let button of document.querySelectorAll('input[name = "tool"]')) {
     if (button.checked) {
       currentButton = button;
       break;
     }
   }
-  if (currentButton.className == "shovel") {
-    this.classes_allowed = ["square_class", "square_grass"];
-  } else if (currentButton.className == "axe") {
-    this.classes_allowed = ["square_trunk", "square_plants"];
-  } else if (currentButton.className == "pickaxe") {
+  if (currentButton.parentElement.className == "shovel") {
+    this.classes_allowed = [
+      "square_dirt",
+      "square_bellow_surface",
+      "square_cloud",
+    ];
+  } else if (currentButton.parentElement.className == "axe") {
+    this.classes_allowed = ["square_log", "square_plants"];
+  } else if (currentButton.parentElement.className == "pickaxe") {
     this.classes_allowed = ["square_rock"];
   }
 }
+
+/* 
+* things left to do: 
+- insert a tree plant - let it be also if sibling square has another plant - so I'll be able to rebuild the tree.
+
+- instead of memory crap, just remove memory and make all the inventory stuf radio buttons - so no need for invisible queue like I have for memory, plus the user will be able to do this better. 
+
+
+*/

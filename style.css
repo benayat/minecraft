@@ -129,6 +129,7 @@ building materials:
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  padding-left: 2vh;
 }
 /* HIDE RADIO */
 [type=radio] { 
@@ -168,10 +169,14 @@ building materials:
 }
 .inventory{
   position: relative;
+  left: 0.5vh;
   display: inline-block;
   height: 10vh;
   width: 10vh;
 
+}
+.inventory:hover{
+  outline: 1px solid green;
 }
 .invisible{
   display: none;
@@ -181,7 +186,7 @@ building materials:
   top:0;
   right:0;
 
-  font-size: 2vh;
+  font-size: 3vh;
   text-align: right;
 }
 /* this is for the inventory divs: */
