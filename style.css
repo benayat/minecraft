@@ -55,6 +55,11 @@ landing page!!
   width: 4vh;
   background: no-repeat;
   background-size: cover;
+  overflow: hidden; /* this line added */
+
+}
+.square:hover{
+  outline: 2px solid grey;
 }
 .square_ipad{
   height: 5vh;
@@ -122,5 +127,81 @@ building materials:
   right:0;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
+  align-items: center;
+}
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+  border : solid white 1px;
+  height: 12vh;
+  width: 12vh;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  background-color: blue;
+}
+#shovel_img{
+  background: url(/img/shovel.jpg) no-repeat cover;
+}
+#pickaxe_img{
+  background: url(/img/pickaxe.jpg) no-repeat cover;
+}
+#axe_img{
+  background: url(/img/axe.jpg) no-repeat cover;
+}
+
+.inventory_wrap{
+  display: block;
+
+  padding-top: 10vh;
+}
+.inventory{
+  position: relative;
+  display: inline-block;
+  height: 10vh;
+  width: 10vh;
+
+}
+.invisible{
+  display: none;
+}
+.small_number{
+  position: absolute;
+  top:0;
+  right:0;
+
+  font-size: 2vh;
+  text-align: right;
+}
+/* this is for the inventory divs: */
+#square_dirt{
+  background-image: url(/img/dirt.jpg);
+}
+
+#square_bellow_surface{
+  background: url(./img/grass.png) no-repeat center center/cover;
+  /* background-image: url(./img/grass.png); */
+}
+#square_plants{
+  background-image: url(/img/leaf.png);
+}
+#square_rock{
+  background-image: url(/img/rock.png);
+}
+#square_log{
+  background-image: url(/img/trunk.png);
+}
+#square_cloud{
+  background-image: url(/img/cloud.png);
 }

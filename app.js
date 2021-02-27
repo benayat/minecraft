@@ -130,17 +130,114 @@ class MineCraft {
     };
     this.trees = { shape: new Shape(4, ""), number: this.shapes.trees.number };
     this.initialNumberOfGoundObjects = this.trees.number + this.stones.number;
+
     this.groundPlacement();
     this.cloudPlacement();
-
+    debugger;
     this.makeRightDiv();
-    this.tempResoureHistogram = {};
+    this.inventory = {};
+    this.classes_allowed = [];
+    //I know it's not recommended, but that's still the best choise here...
+    this.memory = undefined;
   }
 
+  /* 
+right div and game functionality: 
+- three radio buttons: 
+* one for each tool- pickaxe, shovel and axe:
+* axe for trees,
+* shovel for ground,
+* pickaxe for rocks and clouds.(?really?)
+6 resource types: trees(grass and trunk), clouds, stones, ground(dirt and grass).
+placing: buttons in a flex dix, column direction, and the resources histogram in another same flex div bellow. both wrapped by another flex div, with the same direction.
+*/
+
+  /* functionality: 
+  sort tools/buttons functoinality by class. 
+  radio functionality through the html\css!! 
+  only then add event listeners. 
+
+  event listeners: click=>certain classes 
+  and...done!
+*/
+
   makeRightDiv() {
+    //creating and adding the right div
     const rightDiv = document.createElement("div");
     rightDiv.classList.add("right_div");
     document.body.insertAdjacentElement("afterbegin", rightDiv);
+    rightDiv.style.paddingTop = "5vh";
+    //creating radioButtonsHTML and injecting to rightDiv.
+    let shovelButtonHTML = `<label class = "shovel">
+    <input type="radio" name="tool" checked>
+    <img id = "shovel_img" src="img/shovel.jpg">
+    </label>`;
+    let pickaxeButtonHTML = `<label class = "pickaxe">
+    <input type="radio" name="tool">
+    <img id = "pickaxe_img" src="img/pickaxe.jpg">
+    </label>`;
+    let axeButtonHTML = `<label class = "axe">
+    <input type="radio" name="tool">
+    <img id = "axe_img" src="img/axe.jpg">
+    </label>`;
+    rightDiv.insertAdjacentHTML("beforeend", shovelButtonHTML);
+    rightDiv.insertAdjacentHTML("beforeend", pickaxeButtonHTML);
+    rightDiv.insertAdjacentHTML("beforeend", axeButtonHTML);
+    //make inventoryHTML with html.
+    const inventoryHTML = `
+    <div class = "inventory_wrap">
+    <div class = "inventory invisible" id = "square_dirt"><span class = small_number></span></div>
+    <div class = "inventory invisible" id = "square_bellow_surface"><span class = small_number></span></div>
+    <div class = "inventory invisible" id = "square_plants"><span class = small_number></span></div>
+    <div class = "inventory invisible" id = "square_rock"><span class = small_number></span></div>
+    <div class = "inventory invisible" id = "square_log"><span class = small_number></span></div>
+    <div class = "inventory invisible" id = "square_cloud"><span class = small_number></span></div>
+    </div>
+    `;
+    rightDiv.insertAdjacentHTML("beforeend", inventoryHTML);
+    //in the meantime - adding classes style in css for the radio buttons. simple and done.
+
+    let shovelButton = rightDiv.querySelector(".shovel").firstChild;
+    let pickaxeButton = rightDiv.querySelector(".pickaxe").firstChild;
+    let axeButton = rightDiv.querySelector(".axe").firstChild;
+
+    shovelButton.addEventListener("change", () => radioHandler.bind(this));
+    pickaxeButton.addEventListener("change", () => radioHandler.bind(this));
+    axeButton.addEventListener("change", () => radioHandler.bind(this));
+
+    /*
+     * I used bind for the event listeners, because otherwise I wouldn't be able to reference to the mineCraft object in any way - not by the global object because the constructor hasn't finished yet, and not by the "this" keyword because it will point to the window if we go deeper in the scope.
+     */
+
+    let squareResources = this.world.querySelectorAll(
+      ".square_bellow_surface,.square_cloud,.square_plants,.square_log,.square_rock"
+    );
+    squareResources.forEach((x) =>
+      x.addEventListener("click", () => addToInventory.bind(this), {
+        once: true,
+      })
+    );
+    debugger;
+    //* important thing I learned: querySelecyorAll uses css selector, and so you can use [attribute^=value]	or [attribute$=value] for atributes which the value ends with the specified value.
+    let squaresAvailable = this.world.querySelectorAll(
+      'div[class$="square square_sky"]'
+    );
+    squaresAvailable.forEach((x) =>
+      x.addEventListener("click", () => addFromMemory.bind(this), {
+        once: true,
+      })
+    );
+    let inventory_squares = rightDiv.querySelectorAll(".inventory");
+    inventory_squares.forEach((x) =>
+      x.addEventListener("click", () => moveToMemory.bind(this))
+    );
+
+    // target: add event listeners to all squares that can and need to move.
+    //the event will be a click one.
+    //important: give all squares sky class, in case somebody moves them.
+    //event: when a click happens, remove current square(remove last class applied),
+    //and add it's class to the inventory-tempresource collection:
+    //add it to the right div histogram automatically.
   }
 
   static randomize() {
@@ -221,7 +318,6 @@ class MineCraft {
     let initialClouds = this.clouds.number;
     for (let i = 0; i < initialClouds; i++) {
       if (this.clouds.number) {
-        debugger;
         this.addCloud(
           stoneArray[Math.floor(Math.random() * 3)],
           i,
@@ -323,7 +419,7 @@ rocks: up to three, two shapes.(1 and 2 close)
       matrix[i] = [];
       for (let j = 0; j < worldWidth; j++) {
         let square = document.createElement("div");
-        square.classList.add(`${squareClass}`);
+        square.classList.add(`${squareClass}`, "square_sky");
         row.appendChild(square);
         matrix[i][j] = square;
       }
@@ -349,7 +445,7 @@ startGame.classList.add("start");
 startGame.innerHTML = `start`;
 
 startGame.addEventListener("click", (event) => {
-  new MineCraft();
+  window.game = new MineCraft();
   // createRandomWorld();
   // createRightToolsDiv();
 });
@@ -363,4 +459,110 @@ plan: maybe create class to put everything inside, at least the last things
 
 */
 
-//setting up world features:
+/* 
+set up event listeners:
+*/
+//need to go over all the array and make sure only the squares on the top are marked!
+
+// get a string of last element class.
+function getLastClass(element) {
+  const array = element.className.split(" "),
+    [last] = data.slice(-1);
+  return last;
+}
+
+function getIndex(square) {
+  let yIndex = this.rowArray.indexOf(square.parentElement);
+  let xIndex = this.board[yIndex].indexOf(square);
+  return [xIndex, yIndex];
+}
+function getFatherSquare(square) {
+  return this.board[getIndex(square)[0]][getIndex(square)[1] + 1];
+}
+function getSonSquare(square) {
+  return this.board[getIndex(square)[0]][getIndex(square)[1] - 1];
+}
+function validateLocationRemove(square) {
+  let lastClass = getLastClass(square);
+  let lastClassFather = getLastClass(getFatherSquare(square));
+  if (
+    lastClass == "square_cloud" ||
+    lastClassFather == "square_sky" ||
+    lastClassFather == "square_sky"
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function validateLocationInsert(square, classToInsert) {
+  let lastClass = getLastClass(square);
+  let lastClassSon = getLastClass(getSonSquare(square));
+  if (
+    (classToInsert == "square_cloud" && lastClass == "square_sky") ||
+    (classToInsert != "square_cloud" &&
+      lastClassSon != "square_cloud" &&
+      lastClassSon != "square_sky")
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//addFromInventory: poping a square from inventory and back to select location on the board.
+//*right now, I need to add a memory  in the game for one square!
+//this is an event litener for the available squares, I'll add once to the listener.
+function addFromMemory(event) {
+  const classToAdd = this.memory.pop();
+  if (validateLocationInsert(event.target, classToAdd)) {
+    event.target.classList.add(classToAdd);
+    event.target.addEventListener("click", () => addToInventory.bind(this), {
+      once: true,
+    });
+  }
+}
+//*still not ready - need to set up the inventory on the screen.
+function moveToMemory(event) {
+  //do something.
+  this.memory.unshift(event.target.id);
+  this.inventory[event.target.id]--;
+  event.target.firstElementChild.innerHTML = this.inventory[event.target.id];
+  if (this.inventory[event.target.id] == 0) {
+    event.target.classList.add("invisible");
+  }
+}
+
+//adding a square to inventory, while removing the last one from the board.
+function addToInventory(event) {
+  debugger;
+  let lastClass = getLastClass(event.target);
+  if (validateLocationRemove(event.target)) {
+    this.inventory[lastClass] = (this.inventory[lastClass] || 0) + 1;
+    event.target.classList.remove(lastClass);
+    event.target.addEventListener("click", () => addFromMemory.bind(this), {
+      once: true,
+    });
+    document.querySelector(
+      `#${lastClass}`
+    ).firstElementChild.innerHTML = this.inventory[lastClass];
+  }
+}
+//*plan: add this.classes_allowed to MineCraft.
+//*make sure it's applied in the square click listeners.
+function radioHandler(event) {
+  let currentButton;
+  for (let button of rightDiv.querySelectorAll('input[name = "tool"]')) {
+    if (button.checked) {
+      currentButton = button;
+      break;
+    }
+  }
+  if (currentButton.className == "shovel") {
+    this.classes_allowed = ["square_class", "square_grass"];
+  } else if (currentButton.className == "axe") {
+    this.classes_allowed = ["square_trunk", "square_plants"];
+  } else if (currentButton.className == "pickaxe") {
+    this.classes_allowed = ["square_rock"];
+  }
+}
