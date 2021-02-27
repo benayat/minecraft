@@ -32,7 +32,7 @@ landing page!!
 
 .landing_logo{
   object-fit: contain;
-  content: url(img/logo2.jpg); 
+  content: url(./img/logo2.jpg); 
   height: 30vh;
   width: 30vw;
 
