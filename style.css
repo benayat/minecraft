@@ -83,23 +83,23 @@ landing page!!
 
 /* diferent kinds of square backgroungds for diferent materials */
 .square_dirt{
-  background-image: url(/img/dirt.jpg);
+  background-image: url(./img/dirt.jpg);
 }
 .square_bellow_surface{
   background: url(./img/grass.png) no-repeat center center/cover;
   /* background-image: url(./img/grass.png); */
 }
 .square_plants{
-  background-image: url(/img/leaf.png);
+  background-image: url(./img/leaf.png);
 }
 .square_rock{
-  background-image: url(/img/rock.png);
+  background-image: url(./img/rock.png);
 }
 .square_log{
-  background-image: url(/img/trunk.png);
+  background-image: url(./img/trunk.png);
 }
 .square_cloud{
-  background-image: url(/img/cloud.png);
+  background-image: url(./img/cloud.png);
 }
 .square_sky{
   background-color: skyblue;
@@ -108,13 +108,13 @@ landing page!!
 building materials:
 */
 .square_pickaxe{
-  background-image: url(/img/pickaxe.jpg);
+  background-image: url(./img/pickaxe.jpg);
 }
 .square_shovel{
-  background-image: url(/img/shovel.jpg);
+  background-image: url(./img/shovel.jpg);
 }
 .square_axe{
-  background-image: url(/img/shovel.jpg);
+  background-image: url(./img/shovel.jpg);
 }
 
 .right_div{
@@ -153,13 +153,13 @@ building materials:
   background-color: blue;
 }
 #shovel_img{
-  background: url(/img/shovel.jpg) no-repeat cover;
+  background: url(./img/shovel.jpg) no-repeat cover;
 }
 #pickaxe_img{
-  background: url(/img/pickaxe.jpg) no-repeat cover;
+  background: url(./img/pickaxe.jpg) no-repeat cover;
 }
 #axe_img{
-  background: url(/img/axe.jpg) no-repeat cover;
+  background: url(./img/axe.jpg) no-repeat cover;
 }
 
 .inventory_wrap{
@@ -191,7 +191,7 @@ building materials:
 }
 /* this is for the inventory divs: */
 #square_dirt{
-  background-image: url(/img/dirt.jpg);
+  background-image: url(./img/dirt.jpg);
 }
 
 #square_bellow_surface{
@@ -199,14 +199,14 @@ building materials:
   /* background-image: url(./img/grass.png); */
 }
 #square_plants{
-  background-image: url(/img/leaf.png);
+  background-image: url(./img/leaf.png);
 }
 #square_rock{
-  background-image: url(/img/rock.png);
+  background-image: url(./img/rock.png);
 }
 #square_log{
-  background-image: url(/img/trunk.png);
+  background-image: url(./img/trunk.png);
 }
 #square_cloud{
-  background-image: url(/img/cloud.png);
+  background-image: url(./img/cloud.png);
 }
