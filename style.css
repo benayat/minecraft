@@ -90,16 +90,16 @@ landing page!!
   /* background-image: url(./img/grass.png); */
 }
 .square_plants{
-  background-image: url(./img/leaf.png);
+  background-image: url(./img/leaf.png) no-repeat center center/cover;;
 }
 .square_rock{
-  background-image: url(./img/rock.png);
+  background-image: url(./img/rock.png) no-repeat center center/cover;;
 }
 .square_log{
-  background-image: url(./img/trunk.png);
+  background-image: url(./img/trunk.png) no-repeat center center/cover;;
 }
 .square_cloud{
-  background-image: url(./img/cloud.png);
+  background-image: url(./img/cloud.png) no-repeat center center/cover;;
 }
 .square_sky{
   background-color: skyblue;
@@ -108,13 +108,13 @@ landing page!!
 building materials:
 */
 .square_pickaxe{
-  background-image: url(./img/pickaxe.jpg);
+  background-image: url(./img/pickaxe.jpg) no-repeat center center/cover;;
 }
 .square_shovel{
-  background-image: url(./img/shovel.jpg);
+  background-image: url(./img/shovel.jpg) no-repeat center center/cover;;
 }
 .square_axe{
-  background-image: url(./img/shovel.jpg);
+  background-image: url(./img/shovel.jpg) no-repeat center center/cover;;
 }
 
 .right_div{
@@ -191,7 +191,7 @@ building materials:
 }
 /* this is for the inventory divs: */
 #square_dirt{
-  background-image: url(img/higher_res_img/soil.jpg);
+  background-image: url(img/higher_res_img/soil.jpg) no-repeat center center/cover;;
 }
 
 #square_bellow_surface{
@@ -199,14 +199,14 @@ building materials:
   /* background-image: url(./img/grass.png); */
 }
 #square_plants{
-  background-image: url(./img/higher_res_img/tree-leaves.png);
+  background-image: url(./img/higher_res_img/tree-leaves.png) no-repeat center center/cover;;
 }
 #square_rock{
-  background-image: url(./img/higher_res_img/rock.png);
+  background-image: url(./img/higher_res_img/rock.png) no-repeat center center/cover;;
 }
 #square_log{
-  background-image: url(./img/higher_res_img/rock.png);
+  background-image: url(./img/higher_res_img/rock.png) no-repeat center center/cover;;
 }
 #square_cloud{
-  background-image: url(./img/higher_res_img/cloud.png);
+  background-image: url(./img/higher_res_img/cloud.png) no-repeat center center/cover;;
 }
