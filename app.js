@@ -599,7 +599,9 @@ function addToInventory(event) {
     ];
 
     //nothing happens if invisible doesn't exist there!
-    currentInventoryItem.classList.remove("invisible");
+    if (currentInventoryItem.classList.contains("invisible")) {
+      currentInventoryItem.classList.remove("invisible");
+    }
   } else {
     const addToInventoryBind = addToInventory.bind(this);
     event.target.addEventListener("click", addToInventoryBind, {
