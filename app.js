@@ -220,7 +220,6 @@ placing: buttons in a flex dix, column direction, and the resources histogram in
     `;
     rightDiv.insertAdjacentHTML("beforeend", inventoryHTML);
     //in the meantime - adding classes style in css for the radio buttons. simple and done.
-    debugger;
     let shovelButton = rightDiv.querySelector(".shovel").firstElementChild;
     let pickaxeButton = rightDiv.querySelector(".pickaxe").firstElementChild;
     let axeButton = rightDiv.querySelector(".axe").firstElementChild;
@@ -558,7 +557,6 @@ function validateLocationInsert(square, classToInsert) {
 //*right now, I need to add a memory  in the game for one square!
 //this is an event litener for the available squares, I'll add once to the listener.
 function addFromMemory(event) {
-  debugger;
   const classToAdd = this.memory ? this.memory.pop() : null;
   if (validateLocationInsert.call(this, event.target, classToAdd)) {
     event.target.classList.add(classToAdd);
@@ -576,7 +574,7 @@ function addFromMemory(event) {
 //*still not ready - need to set up the inventory on the screen.
 function moveToMemory(event) {
   //do something.
-  debugger;
+
   this.memory.unshift(event.target.id);
   this.inventory[event.target.id]--;
   event.target.firstElementChild.innerHTML = this.inventory[event.target.id];
@@ -587,7 +585,6 @@ function moveToMemory(event) {
 
 //adding a square to inventory, while removing the last one from the board.
 function addToInventory(event) {
-  debugger;
   const lastClass = getLastClass(event.target);
   if (validateLocationRemove.call(this, event.target)) {
     this.inventory[lastClass] = (this.inventory[lastClass] || 0) + 1;
@@ -613,7 +610,6 @@ function addToInventory(event) {
 //*plan: add this.classes_allowed to MineCraft.
 //*make sure it's applied in the square click listeners.
 function radioHandler(event) {
-  debugger;
   let currentButton;
   for (let button of document.querySelectorAll('input[name = "tool"]')) {
     if (button.checked) {
