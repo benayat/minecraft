@@ -165,7 +165,7 @@ placing: buttons in a flex dix, column direction, and the resources histogram in
     const rightDiv = document.createElement("div");
     rightDiv.classList.add("right_div");
     document.body.insertAdjacentElement("afterbegin", rightDiv);
-    rightDiv.style.paddingTop = "5vh";
+    rightDiv.style.paddingTop = "3vh";
     //creating radioButtonsHTML and injecting to rightDiv.
     let shovelButtonHTML = `<label class = "shovel">
     <input type="radio" name="tool" checked>
@@ -263,11 +263,12 @@ placing: buttons in a flex dix, column direction, and the resources histogram in
     );
 
     let buttonsHTML = `
-    <button class = "game_control reset">RESET GAME</button>
-    <button class = "game_control backToMenu">BACK</button>
+    <button class = "game_control reset">RESET</button>
+    <button class = "game_control exit">exit</button>
     `;
     rightDiv.insertAdjacentHTML("afterbegin", buttonsHTML);
     const buttonReset = rightDiv.querySelector(".reset");
+    buttonReset.style.paddingBottom = "1vh";
     const buttonExit = rightDiv.querySelector(".exit");
 
     const resetGameBind = resetGame.bind(this);
@@ -276,6 +277,7 @@ placing: buttons in a flex dix, column direction, and the resources histogram in
     buttonReset.addEventListener("click", resetGameBind);
     buttonExit.addEventListener("click", exitGameBind);
 
+    document.querySelectorAll("label").style.paddingTop = "2vh";
     // target: add event listeners to all squares that can and need to move.
     //the event will be a click one.
     //important: give all squares sky class, in case somebody moves them.
@@ -491,12 +493,37 @@ startGame.innerHTML = `start`;
 
 startGame.addEventListener("click", (event) => {
   window.game = new MineCraft();
-  // createRandomWorld();
-  // createRightToolsDiv();
 });
 
+const tutorial = document.createElement("button");
+tutorial.classList.add("start");
+tutorial.innerHTML = `Tutorial`;
+innerHtml = `
+<div class = "tutorial_div">
+<div>this is THE BEST minecraft game you'll see.</div>
+<div>you have 3 tools to use:</div>
+<div><img class = "landing_page_img" src = ".//img//shovel.jpg" alt = "shovel"><span>will harvest</span><img class = "landing_page_img" src = "./img//higher_res_img//grass.png"><span>and </span><img class = "landing_page_img" src = ".//img//higher_res_img//soil.jpg"></div>
+<div><img class = "landing_page_img" src = ".//img//axe.jpg" alt = "axe"><span>will harvest</span><img class = "landing_page_img" src = ".//img//higher_res_img//leaf.png"><span>and </span><img class = "landing_page_img" src = ".//img//higher_res_img//trunk.jpg"></div>
+<div><img class = "landing_page_img" src = ".//img//pickaxe.jpg" alt = "pickaxe"><span>will harvest</span><img class = "landing_page_img" src = ".//img//higher_res_img//rock.png"></div>
+</div>
+`;
+logoStartDiv.insertAdjacentHTML("beforeend", innerHtml);
+
+tutorial.addEventListener("click", (event) => {
+  let tutorialDiv = document.querySelector(".tutorial_div");
+  tutorialDiv.style.opacity = "1";
+  tutorialDiv.style.zIndex = "20";
+
+  tutorialDiv.addEventListener("click", (event) => {
+    let tutorial = event.target;
+    tutorial.style.opacity = "0";
+    tutorial.style.zIndex = "-2";
+  });
+});
 logoStartDiv.insertAdjacentElement("afterbegin", logo);
 logoStartDiv.insertAdjacentElement("beforeend", startGame);
+logoStartDiv.insertAdjacentElement("beforeend", tutorial);
+
 world.insertAdjacentElement("beforeend", logoStartDiv);
 
 /* 
