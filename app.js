@@ -120,6 +120,7 @@ class MineCraft {
       this.rowArray.find((x) => x.classList.contains("ground_level"))
     );
     this.shapes = MineCraft.randomize();
+
     this.clouds = {
       shape: new Shape(this.shapes.clouds.shape, "square_cloud"),
       number: this.shapes.clouds.number,
@@ -277,7 +278,12 @@ placing: buttons in a flex dix, column direction, and the resources histogram in
     buttonReset.addEventListener("click", resetGameBind);
     buttonExit.addEventListener("click", exitGameBind);
 
-    document.querySelectorAll("label").style.paddingTop = "2vh";
+    document
+      .querySelectorAll("label")
+      .forEach((x) => (x.style.paddingTop = "2vh"));
+    let mos = document.querySelectorAll("label");
+    console.log(mos);
+
     // target: add event listeners to all squares that can and need to move.
     //the event will be a click one.
     //important: give all squares sky class, in case somebody moves them.
