@@ -1,3 +1,5 @@
+//just a note
+
 /* 
 class mineCraft: 
 constructor - basic stuff {
